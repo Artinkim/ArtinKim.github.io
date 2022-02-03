@@ -20,7 +20,6 @@ function setup() {  // this function runs only once while running
 
     actor_img = loadImage('images/shahrukh.png');
     specs = loadImage('images/spects.png');
-    smoke = loadImage('images/cigar.png');
 }
 
 function recievedPoses(poses) {
@@ -61,7 +60,6 @@ function draw() { // this function code runs in infinite loop
 
         // Apply specs and cigar
         image(specs, singlePose.nose.x-40, singlePose.nose.y-70, 125, 125);
-        image(smoke, singlePose.nose.x-35, singlePose.nose.y+28, 50, 50);
     }
     
     //background(200);
