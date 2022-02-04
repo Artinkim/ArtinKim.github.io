@@ -6,7 +6,6 @@ let leyeX,leyeY;
 let singlePose,skeleton;
 let actor_img;
 let specs,smoke;
-let video; //Variable to hold current video stream
 let yolo; //Initializing model method with YOLO. A callback needs to be passed
 let status; //Status check to determine whthere the model has been loaded
 let objects = [];
@@ -19,9 +18,8 @@ function setup() {  // this function runs only once while running
 
     //load the PoseNet model
     posenet = ml5.poseNet(capture, modelLOADED);
-    yolo = ml5.YOLO(video, startDetecting);
+    yolo = ml5.YOLO(capture, startDetecting);
     
-    video.hide();
     status = select('#status');
     //detect pose
     posenet.on('pose', recievedPoses);
