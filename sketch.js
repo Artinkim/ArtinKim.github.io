@@ -6,6 +6,10 @@ let leyeX,leyeY;
 let singlePose,skeleton;
 let actor_img;
 let specs,smoke;
+let video; //Variable to hold current video stream
+let yolo; //Initializing model method with YOLO. A callback needs to be passed
+let status; //Status check to determine whthere the model has been loaded
+let objects = [];
 
 function setup() {  // this function runs only once while running
     createCanvas(800, 500);
@@ -15,6 +19,10 @@ function setup() {  // this function runs only once while running
 
     //load the PoseNet model
     posenet = ml5.poseNet(capture, modelLOADED);
+    yolo = ml5.YOLO(video, startDetecting);
+    
+    video.hide();
+    status = select('#status');
     //detect pose
     posenet.on('pose', recievedPoses);
 
@@ -57,11 +65,30 @@ function draw() { // this function code runs in infinite loop
         for(let j=0; j<skeleton.length; j++) {
             line(skeleton[j][0].position.x, skeleton[j][0].position.y, skeleton[j][1].position.x, skeleton[j][1].position.y);
         }
-
+        for (let i = 0; i < objects.length; i++)  //Iterating through all objects
+            {
+            noStroke();
+            fill(0, 255, 0); //Color of text
+            text(objects[i].label, objects[i].x * width, objects[i].y * height - 5); //Displaying the label
+            noFill();
+            strokeWeight(4); 
+            stroke(0, 255, 0); //Defining stroke for rectangular outline
+            rect(objects[i].x * width, objects[i].y * height, objects[i].w * width, objects[i].h * height);
+            }
         // Apply specs and cigar
         image(specs, singlePose.nose.x, singlePose.nose.y, 125, 125);
     }
     
+function startDetecting() {
+    status.html('Model loaded!'); //When the model is loaded
+    detect(); //Calling detect method
+} 
+function detect() {
+    yolo.detect(function(err, results) {
+    objects = results; //Storing results in object
+    detect(); //Continuous detection
+    });
+}    
     //background(200);
     //1.point
     //point(200, 200);
