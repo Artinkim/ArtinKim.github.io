@@ -83,6 +83,6 @@ function draw() { // this function code runs in infinite loop
         let diffy = singlePose.leftEye.y-singlePose.rightEye.y;
         let dist = Math.sqrt(diffx*diffx+diffy*diffy);
         
-        image(specs, singlePose.rightEye.x/2, singlePose.rightEye.y, dist, dist);
+        image(specs, singlePose.rightEye.x/2, singlePose.rightEye.y/4, 155, 155);
     }
 }
