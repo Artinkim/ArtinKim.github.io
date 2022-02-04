@@ -59,7 +59,7 @@ function draw() { // this function code runs in infinite loop
         }
 
         // Apply specs and cigar
-        image(specs, singlePose.nose.x-400, singlePose.nose.y-140, 125, 125);
+        image(specs, singlePose.nose.x-800, singlePose.nose.y-140, 12, 125);
     }
     
     //background(200);
