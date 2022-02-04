@@ -69,16 +69,20 @@ function draw() { // this function code runs in infinite loop
         for(let j=0; j<skeleton.length; j++) {
             line(skeleton[j][0].position.x, skeleton[j][0].position.y, skeleton[j][1].position.x, skeleton[j][1].position.y);
         }
-        for (let i = 0; i < objects.length; i++) {  //Iterating through all object
-            noStroke();
-            fill(0, 255, 0); //Color of text
-            text(objects[i].label, objects[i].x * width, objects[i].y * height - 5); //Displaying the label
-            noFill();
-            strokeWeight(4); 
-            stroke(0, 255, 0); //Defining stroke for rectangular outline
-            rect(objects[i].x * width, objects[i].y * height, objects[i].w * width, objects[i].h * height);
-        }
+//         for (let i = 0; i < objects.length; i++) {  //Iterating through all object
+//             noStroke();
+//             fill(0, 255, 0); //Color of text
+//             text(objects[i].label, objects[i].x * width, objects[i].y * height - 5); //Displaying the label
+//             noFill();
+//             strokeWeight(4); 
+//             stroke(0, 255, 0); //Defining stroke for rectangular outline
+//             rect(objects[i].x * width, objects[i].y * height, objects[i].w * width, objects[i].h * height);
+//         }
         // Apply specs and cigar
-        image(specs, singlePose.nose.x, singlePose.nose.y, 125, 125);
+        let diffx = singlePose.leftEye.x-singlePose.rightEye.x;
+        let diffy = singlePose.leftEye.y-singlePose.rightEye.y;
+        let dist = Math.sqrt(diffx*diffx+diffy*diffy);
+        
+        image(specs, (singlePose.leftEye.x+singlePose.rightEye.x)/2, (singlePose.leftEye.y+singlePose.rightEye.y)/2, dist, dist);
     }
 }
