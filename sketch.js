@@ -41,11 +41,17 @@ function modelLOADED() {
     console.log("model has loaded");
 }
 
-/*
-function getRandomArbitrary(min, max) { // generate random num
-    return Math.random() * (max - min) + min;
-}
-*/
+function startDetecting() {
+    status.html('Model loaded!'); //When the model is loaded
+    detect(); //Calling detect method
+} 
+function detect() {
+    yolo.detect(function(err, results) {
+    objects = results; //Storing results in object
+    detect(); //Continuous detection
+    });
+}    
+
 function draw() { // this function code runs in infinite loop
     
     // images and video(webcam)
@@ -63,8 +69,7 @@ function draw() { // this function code runs in infinite loop
         for(let j=0; j<skeleton.length; j++) {
             line(skeleton[j][0].position.x, skeleton[j][0].position.y, skeleton[j][1].position.x, skeleton[j][1].position.y);
         }
-        for (let i = 0; i < objects.length; i++)  //Iterating through all objects
-            {
+        for (let i = 0; i < objects.length; i++) {  //Iterating through all object
             noStroke();
             fill(0, 255, 0); //Color of text
             text(objects[i].label, objects[i].x * width, objects[i].y * height - 5); //Displaying the label
@@ -72,52 +77,8 @@ function draw() { // this function code runs in infinite loop
             strokeWeight(4); 
             stroke(0, 255, 0); //Defining stroke for rectangular outline
             rect(objects[i].x * width, objects[i].y * height, objects[i].w * width, objects[i].h * height);
-            }
+        }
         // Apply specs and cigar
         image(specs, singlePose.nose.x, singlePose.nose.y, 125, 125);
     }
-    
-function startDetecting() {
-    status.html('Model loaded!'); //When the model is loaded
-    detect(); //Calling detect method
-} 
-function detect() {
-    yolo.detect(function(err, results) {
-    objects = results; //Storing results in object
-    detect(); //Continuous detection
-    });
-}    
-    //background(200);
-    //1.point
-    //point(200, 200);
-    //2.line
-    //line(200, 200, 300, 300);
-    //3.trialgle
-    //triangle(100, 200, 300, 400, 150, 250);
-    //4.rectangle
-    //rect(250, 200, 200, 100);
-    //5. circle
-    //ellipse(100, 200, 100, 100);
-    // color circlw using stroke and crcle
-    /*
-    fill(127, 102, 34);
-    stroke(255, 0, 0);
-    ellipse(100, 200, 100, 100);
-    stroke(0, 255, 0);
-    ellipse(300, 320, 100, 100);
-    stroke(0, 0, 255);
-    ellipse(400, 400, 100, 100);
-    */
-
-    // infite loop using mouse hovering
-    //fill(255);
-    /*
-    r = getRandomArbitrary(0, 255);
-    g = getRandomArbitrary(0, 255);
-    b = getRandomArbitrary(0, 255);
-    fill(r,g,b);
-    ellipse(mouseX, mouseY, 50, 50);
-    */
-   // IMAGE CAPTURE
-   //image(capture, 0, 0, 800, 600);
 }
